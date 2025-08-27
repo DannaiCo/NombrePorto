@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Día del padre - iCo Medios</title>
+  <meta http-equiv="refresh" content="180">
+
+  <!-- Unbounded desde Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* Fallback local */
+    @font-face {
+      font-family: 'UnboundedLocal';
+      src: url('Unbounded-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'UnboundedLocal';
+      src: url('Unbounded-Medium.ttf') format('truetype');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'UnboundedLocal';
+      src: url('Unbounded-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'UnboundedLocal';
+      src: url('Unbounded-ExtraBold.ttf') format('truetype');
+      font-weight: 800;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      overflow: hidden;
+      width: 2114px;
+      height: 630px;
+    }
+
+    .contenedor {
+      position: relative;
+      width: 2114px;
+      height: 630px;
+    }
+  
+    video#fondoVideo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 2114px;
+      height: 630px;
+      object-fit: cover; /* llenar toda la pantalla panorámica */
+      z-index: 0;
+    }
+  
+    .mensaje {
+      position: absolute;
+      bottom: 20%;              /* Ajustado para mejor visibilidad */
+      left: 50%;                /* centrado horizontal */
+      transform: translateX(-50%);
+      z-index: 2;
+      font-weight: 700;
+      color: #E6736A;
+      font-size: 3vw;           /* proporcional a la pantalla panorámica */
+      font-style: normal;
+      font-family: 'UnboundedLocal', 'Unbounded', sans-serif !important;
+      opacity: 0;
+      transition: opacity 0.5s ease-in;
+      text-align: center;
+      white-space: nowrap;
+    }
+  
+    .mensaje.mostrar {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="contenedor">
+    <video autoplay loop muted playsinline id="fondoVideo">
+      <source src="fondo.mp4" type="video/mp4">
+      Tu navegador no soporta video.
+    </video>
+
+    <div id="nombres">
+      <div class="mensaje para"></div>
+    </div>
+  </div>
+
+  <script>
+    const url = "https://script.google.com/macros/s/AKfycbxyPI4xpgj0ibff7t49Gy5MJKxZulYvRt5EEjgttmTOwPCEguZZidmSGlkUIPRtC0yC/exec";
+
+    fetch(url)
+      .then(res => res.json())
+      .then(aprobados => {
+        const contenedorMensaje = document.querySelector(".para");
+
+        if (aprobados.length > 0) {
+          const elegido = aprobados[Math.floor(Math.random() * aprobados.length)];
+          contenedorMensaje.textContent = (elegido.para || "--").toUpperCase();
+        } else {
+          contenedorMensaje.textContent = "--";
+        }
+
+        setTimeout(() => {
+          contenedorMensaje.classList.add("mostrar");
+        }, 1000);
+      });
+  </script>
+</body>
+</html>
+
