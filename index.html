@@ -54,15 +54,16 @@
       height: 630px;
     }
   
-    video#fondoVideo {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 2114px;
-      height: 630px;
-      object-fit: cover; /* llenar toda la pantalla panorámica */
-      z-index: 0;
-    }
+   video#fondoVideo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 🔥 ya no corta el video */
+  background-color: #000; /* opcional: relleno en negro si no ajusta */
+  z-index: 0;
+}
   
     .mensaje {
       position: absolute;
@@ -120,6 +121,7 @@
   </script>
 </body>
 </html>
+
 
 
 
