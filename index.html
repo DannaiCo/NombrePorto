@@ -4,56 +4,88 @@
   <meta charset="UTF-8">
   <title>Día del padre - iCo Medios</title>
   <meta http-equiv="refresh" content="180">
- <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Salsa&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">
 
   <style>
-	    html, body {
-	      margin: 0;
-	      padding: 0;
-	      background-color: #ffffff;
-	      overflow: hidden;
-      }
-    
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      overflow: hidden;
+    }
+
     .contenedor {
       position: relative;
-      width: 2114px;
-      height: 630px;
+      width: 2120px;
+      height: 576px;
     }
-  
-   video#fondoVideo {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;  /* 🔥 ocupa todo el espacio sin recorte */
-  z-index: 0;
-}
-  
-    .mensaje {
+
+    video#fondoVideo {
       position: absolute;
-      bottom: 10%;              /* Ajustado para mejor visibilidad */
-      left: 50%;                /* centrado horizontal */
-      transform: translateX(-50%);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      z-index: 0;
+    }
+
+    /* --- NUEVO: contenedor general para posicionar los textos --- */
+    #nombres {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       z-index: 2;
+    }
+
+    /* ---- NUEVO: posiciones individuales ---- */
+    .nombre {
+      position: absolute;
+      top: 20%;       /* AJUSTA LIBREMENTE */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+    }
+
+    .deseo1 {
+      position: absolute;
+      top: 45%;       /* AJUSTA LIBREMENTE */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+    }
+
+    .deseo2 {
+      position: absolute;
+      top: 65%;       /* AJUSTA LIBREMENTE */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+    }
+
+    /* Estilos que ya tenía tu proyecto */
+    .mensaje {
       font-weight: 400;
       color: #FFFFFF;
-      font-size: 3vw;           /* proporcional a la pantalla panorámica */
-      font-style: normal;
-      font-family: "Salsa", cursive;
+      font-size: 3vw;
+      font-family: "Berkshire Swash", serif;
       opacity: 0;
       transition: opacity 0.5s ease-in;
       text-align: center;
       white-space: nowrap;
     }
-  
+
     .mensaje.mostrar {
       opacity: 1;
     }
   </style>
 </head>
+
 <body>
   <div class="contenedor">
     <video autoplay loop muted playsinline id="fondoVideo">
@@ -62,7 +94,9 @@
     </video>
 
     <div id="nombres">
-      <div class="mensaje para"></div>
+      <div class="mensaje nombre"></div>
+      <div class="mensaje deseo1"></div>
+      <div class="mensaje deseo2"></div>
     </div>
   </div>
 
@@ -72,34 +106,32 @@
     fetch(url)
       .then(res => res.json())
       .then(aprobados => {
-        const contenedorMensaje = document.querySelector(".para");
+        const elNombre = document.querySelector(".nombre");
+        const elDeseo1 = document.querySelector(".deseo1");
+        const elDeseo2 = document.querySelector(".deseo2");
 
-        if (aprobados.length > 0) {
-          const elegido = aprobados[Math.floor(Math.random() * aprobados.length)];
-          contenedorMensaje.textContent = (elegido.para || "--").toUpperCase();
-        } else {
-          contenedorMensaje.textContent = "--";
+        if (!aprobados || aprobados.length === 0) {
+          elNombre.textContent = "--";
+          elDeseo1.textContent = "";
+          elDeseo2.textContent = "";
+          return;
         }
 
+        const item = aprobados[Math.floor(Math.random() * aprobados.length)];
+
+        elNombre.textContent = (item.nombre || "--").toUpperCase();
+        elDeseo1.textContent = item.deseo1 ? ` ${item.deseo1}` : "";
+        elDeseo2.textContent = item.deseo2 ? ` ${item.deseo2}` : "";
+
         setTimeout(() => {
-          contenedorMensaje.classList.add("mostrar");
+          elNombre.classList.add("mostrar");
+          elDeseo1.classList.add("mostrar");
+          elDeseo2.classList.add("mostrar");
         }, 500);
       });
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
