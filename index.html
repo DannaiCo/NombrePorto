@@ -1,142 +1,180 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Día del padre - iCo Medios</title>
-  <meta http-equiv="refresh" content="180">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Día de la madre - iCo Medios</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">
+    <meta http-equiv="refresh" content="180" />
 
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background-color: #ffffff;
-      overflow: hidden;
-    }
+    <!-- FUENTE -->
+    <link rel="stylesheet" href="https://use.typekit.net/vsp7vcb.css" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #ffffff;
+      }
 
-    .contenedor {
-      position: relative;
-      width: 2120px;
-      height: 576px;
-    }
+      .contenedor {
+        position: relative;
 
-    video#fondoVideo {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: fill;
-      z-index: 0;
-    }
+        width: 2120px;
+        height: 576px;
 
-    /* --- NUEVO: contenedor general para posicionar los textos --- */
-    #nombres {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 2;
-    }
+        overflow: hidden;
 
-    /* ---- NUEVO: posiciones individuales ---- */
-    .nombre {
-      position: absolute;
-      top: 59%;       /* AJUSTA LIBREMENTE */
-      left: 59%;
-      transform: translateX(-50%);
-      width: 90%;
-    }
+        transform-origin: top left;
+      }
 
-    .deseo1 {
-      position: absolute;
-      top: 77%;       /* AJUSTA LIBREMENTE */
-      left: 59%;
-      transform: translateX(-50%);
-      width: 90%;
-    }
+      /* VIDEO */
+      #fondoVideo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+      }
 
-    .deseo2 {
-      position: absolute;
-      top: 85%;       /* AJUSTA LIBREMENTE */
-      left: 59%;
-      transform: translateX(-50%);
-      width: 90%;
-    }
+      /* CONTENEDOR TEXTO */
+      /* CONTENEDOR GENERAL */
+      #nombres {
+        position: absolute;
+        inset: 0;
+        z-index: 5;
+      }
 
-    /* Estilos que ya tenía tu proyecto */
-    .mensaje {
-      font-weight: 400;
-      color: #1A3869;
-      font-size: 2vw;
-      font-family: "Berkshire Swash", serif;
-      opacity: 0;
-      transition: opacity 0.5s ease-in;
-      text-align: center;
-      white-space: nowrap;
-    }
+      /* NOMBRE MAMÁ */
+      .nombre {
+        position: absolute;
 
-    .mensaje.mostrar {
-      opacity: 1;
-    }
-  </style>
-</head>
+        top: 500px;
+        left: 0px;
 
-<body>
-  <div class="contenedor">
-    <video autoplay loop muted playsinline id="fondoVideo">
-      <source src="fondo.mp4" type="video/mp4">
-      Tu navegador no soporta video.
-    </video>
+        width: 200px;
 
-    <div id="nombres">
-      <div class="mensaje nombre"></div>
-      <div class="mensaje deseo1"></div>
-      <div class="mensaje deseo2"></div>
+        text-align: center;
+
+        color: #0000ec;
+
+        font-size: 89px;
+
+        font-family: "filson-soft", sans-serif;
+
+        font-weight: 700;
+
+        font-style: normal;
+
+        opacity: 0;
+
+        transition: opacity 0.8s ease;
+      }
+
+      /* DICHO */
+      .dicho {
+        position: absolute;
+
+        top: 211px;
+        left: 175px;
+
+        width: 1100px;
+
+        text-align: center;
+
+        color: #cd2530;
+
+        font-size: 90px;
+
+        line-height: 1.2;
+
+        font-family: "filson-soft", sans-serif;
+
+        font-weight: 700;
+
+        font-style: normal;
+
+        opacity: 0;
+
+        transition: opacity 0.8s ease;
+      }
+      .mostrar {
+        opacity: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="contenedor">
+      <!-- VIDEO -->
+      <video autoplay muted loop playsinline id="fondoVideo">
+        <source src="fondo.mp4" type="video/mp4" />
+      </video>
+
+      <!-- TEXTOS -->
+      <div id="nombres">
+        <div class="dicho"></div>
+      </div>
     </div>
-  </div>
+    <script>
+      function escalarPantalla() {
+        const escalaX = window.innerWidth / 2120;
+        const escalaY = window.innerHeight / 576;
 
-  <script>
-    const url = "https://script.google.com/macros/s/AKfycbwdj28x2XpZ4nrzo8R67KA3E-OSm44CWrPCXRntUuJxBoZVOjPUeR_tyaSWTj7DIs9CVQ/exec";
+        const escala = Math.min(escalaX, escalaY);
 
-    fetch(url)
-      .then(res => res.json())
-      .then(aprobados => {
-        const elNombre = document.querySelector(".nombre");
-        const elDeseo1 = document.querySelector(".deseo1");
-        const elDeseo2 = document.querySelector(".deseo2");
+        document.querySelector(".contenedor").style.transform = `scale(${escala})`;
+      }
 
-        if (!aprobados || aprobados.length === 0) {
-          elNombre.textContent = "--";
-          elDeseo1.textContent = "";
-          elDeseo2.textContent = "";
-          return;
-        }
+      window.addEventListener("resize", escalarPantalla);
+      window.addEventListener("load", escalarPantalla);
 
-        const item = aprobados[Math.floor(Math.random() * aprobados.length)];
+      escalarPantalla();
 
-        elNombre.textContent = (item.nombre || "--").toUpperCase();
-        elDeseo1.textContent = item.deseo1 ? ` ${item.deseo1}` : "";
-        elDeseo2.textContent = item.deseo2 ? ` ${item.deseo2}` : "";
+      const url =
+        "https://script.google.com/macros/s/AKfycbzwPsdGLy5kUFCS6T-J5LaXAsN8tPmV_h23cY9wNMb5-aJUj-fnhpsVya1oSLXGgjlelg/exec";
 
-        setTimeout(() => {
-          elNombre.classList.add("mostrar");
-          elDeseo1.classList.add("mostrar");
-          elDeseo2.classList.add("mostrar");
-        }, 500);
-      });
-  </script>
-</body>
+      const elDicho = document.querySelector(".dicho");
+
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Datos recibidos:", data);
+
+          if (!data || data.length === 0) {
+            elDicho.textContent = "No hay frases aprobadas";
+            elDicho.classList.add("mostrar");
+            return;
+          }
+
+          let index = 0;
+
+          function mostrarMensaje() {
+            const item = data[Math.floor(Math.random() * data.length)];
+
+            console.log("Frase aleatoria:", item);
+
+            elDicho.classList.remove("mostrar");
+
+            setTimeout(() => {
+              elDicho.textContent = item || "";
+              elDicho.classList.add("mostrar");
+            }, 300);
+          }
+
+          mostrarMensaje();
+
+          setInterval(mostrarMensaje, 5000);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+
+          elDicho.textContent = "Error cargando frases";
+          elDicho.classList.add("mostrar");
+        });
+    </script>
+  </body>
 </html>
-
-
-
-
-
-
-
-
